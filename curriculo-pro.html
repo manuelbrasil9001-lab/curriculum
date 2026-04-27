@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CurrículoPro — Crie seu currículo profissional</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1a2744;--navy-light:#2d3f6b;--gold:#c9a84c;--gold-light:#f0d080;--cream:#faf8f4;--white:#fff;--gray-100:#f4f4f2;--gray-200:#e8e6e0;--gray-400:#a0998a;--gray-600:#6b6358;--gray-900:#2a2520;--red:#c0392b;--shadow:0 4px 24px rgba(26,39,68,.10);--shadow-md:0 8px 40px rgba(26,39,68,.14)}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--gray-900);min-height:100vh;font-size:15px}
+/* HEADER */
+header{background:var(--navy);padding:13px 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.18)}
+.logo{font-family:'Playfair Display',serif;color:var(--gold);font-size:19px;font-weight:700}.logo span{color:#fff;font-weight:400}
+.header-center{display:flex;flex-direction:column;align-items:center;gap:4px}
+.progress-wrap{width:200px;height:5px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .4s ease;width:0%}
+.progress-lbl{font-size:10px;color:rgba(255,255,255,.45)}
+.header-actions{display:flex;gap:9px;align-items:center}
+.save-badge{font-size:11px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:4px}
+.save-badge.saved{color:#6fcf97}
+/* BUTTONS */
+.btn{padding:7px 16px;border-radius:8px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;transition:all .18s}
+.btn-outline{background:transparent;border:1.5px solid rgba(201,168,76,.5);color:var(--gold)}
+.btn-outline:hover{border-color:var(--gold);background:rgba(201,168,76,.08)}
+.btn-gold{background:var(--gold);color:var(--navy);font-weight:600}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 4px 12px rgba(201,168,76,.3)}
+.btn-navy{background:var(--navy);color:#fff;font-weight:600}.btn-navy:hover{background:var(--navy-light)}
+.btn-danger{background:var(--red);color:#fff;font-size:11px;padding:5px 9px}
+.btn-sm{padding:5px 13px;font-size:12px}.btn-icon{padding:5px 8px}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none!important}
+/* LAYOUT */
+.app-container{display:grid;grid-template-columns:385px 1fr;min-height:calc(100vh - 55px)}
+/* SIDEBAR */
+.sidebar{background:var(--white);border-right:1px solid var(--gray-200);overflow-y:auto;position:sticky;top:55px;height:calc(100vh - 55px)}
+.sidebar-tabs{display:flex;border-bottom:1px solid var(--gray-200);position:sticky;top:0;background:var(--white);z-index:10}
+.sidebar-tab{flex:1;padding:12px 5px;border:none;background:none;cursor:pointer;font-size:12px;font-weight:500;color:var(--gray-400);border-bottom:2.5px solid transparent;transition:all .15s;font-family:'DM Sans',sans-serif}
+.sidebar-tab.active{color:var(--navy);border-bottom-color:var(--gold)}
+.sidebar-tab:hover:not(.active){color:var(--gray-600);background:var(--gray-100)}
+.sidebar-content{display:none;padding:16px}.sidebar-content.active{display:block}
+/* FORM SECTIONS */
+.form-section{border:1px solid var(--gray-200);border-radius:11px;margin-bottom:13px;overflow:hidden}
+.form-section-header{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--gray-100);cursor:pointer;user-select:none}
+.form-section-header h3{font-size:13px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:7px}
+.toggle-icon{color:var(--gray-400);font-size:15px;transition:transform .2s}
+.form-section.open .toggle-icon{transform:rotate(180deg)}
+.form-section-body{display:none;padding:14px}.form-section.open .form-section-body{display:block}
+.form-group{margin-bottom:11px}.form-group:last-child{margin-bottom:0}
+label{display:block;font-size:11px;font-weight:600;color:var(--gray-600);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;padding:8px 11px;border:1.5px solid var(--gray-200);border-radius:7px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--gray-900);background:#fff;transition:border-color .15s;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(26,39,68,.08)}
+textarea{resize:vertical;min-height:72px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+/* TIP BOX */
+.tip-box{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(26,39,68,.04));border:1px solid rgba(201,168,76,.25);border-radius:8px;padding:9px 11px;margin-bottom:11px;font-size:11px;color:var(--gray-600);line-height:1.5;display:flex;gap:7px;align-items:flex-start}
+.tip-icon{font-size:13px;flex-shrink:0;margin-top:1px}
+/* CHAR COUNT */
+.textarea-wrap{position:relative}
+.char-count{position:absolute;bottom:7px;right:9px;font-size:10px;color:var(--gray-400);pointer-events:none}
+.char-count.warn{color:var(--gold)}.char-count.over{color:var(--red)}
+/* SKILLS */
+.skill-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;min-height:8px}
+.skill-tag{background:rgba(26,39,68,.08);color:var(--navy);padding:4px 11px;border-radius:20px;font-size:12px;display:flex;align-items:center;gap:5px;animation:fadeIn .2s ease}
+.skill-tag button{background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:14px;line-height:1;padding:0}
+.skill-tag button:hover{color:var(--red)}
+.skill-input-row{display:flex;gap:7px}.skill-input-row input{flex:1}
+.suggested-skills{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.sugg-chip{background:none;border:1px dashed var(--gray-200);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--gray-400);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.sugg-chip:hover{border-color:var(--navy);color:var(--navy);background:rgba(26,39,68,.04)}
+/* REPEATABLE */
+.repeat-item{border:1px solid var(--gray-200);border-radius:9px;padding:12px;margin-bottom:9px;background:var(--gray-100);animation:fadeIn .2s ease}
+.repeat-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+.repeat-item-title{font-size:12px;font-weight:600;color:var(--navy)}
+.add-item-btn{width:100%;padding:9px;border:1.5px dashed var(--gray-200);border-radius:8px;background:none;cursor:pointer;color:var(--navy);font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px}
+.add-item-btn:hover{border-color:var(--navy);background:rgba(26,39,68,.04)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+/* PHOTO */
+.photo-upload-area{border:2px dashed var(--gray-200);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all .15s}
+.photo-upload-area:hover{border-color:var(--navy);background:rgba(26,39,68,.03)}
+.photo-preview{width:58px;height:58px;border-radius:50%;object-fit:cover;border:2px solid var(--gray-200)}
+.photo-upload-text{font-size:11px;color:var(--gray-400);margin-top:5px}
+/* TEMPLATES */
+.template-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.template-card{border:2.5px solid var(--gray-200);border-radius:11px;cursor:pointer;transition:all .18s;overflow:hidden;position:relative}
+.template-card:hover{border-color:var(--navy-light);transform:translateY(-2px);box-shadow:var(--shadow)}
+.template-card.selected{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.2)}
+.template-preview{height:100px;position:relative;overflow:hidden}
+.tc-elegance .template-preview{background:linear-gradient(135deg,#1a2744 60%,#c9a84c)}
+.tc-moderno .template-preview{background:linear-gradient(135deg,#2c3e50,#3498db)}
+.tc-minimalista .template-preview{background:#f0ede8;border-bottom:3px solid #2c3e50}
+.tc-criativo .template-preview{background:linear-gradient(135deg,#6c3483,#e74c3c)}
+.tc-executivo .template-preview{background:linear-gradient(180deg,#1a2744 38%,#f5f5f5 38%)}
+.tc-verde .template-preview{background:linear-gradient(135deg,#1a4a2e,#4a7c59)}
+.tc-tech .template-preview{background:linear-gradient(135deg,#0f2027,#2c5364)}
+.tc-academico .template-preview{background:linear-gradient(180deg,#7b1113 34%,#f8f4ef 34%)}
+.tpl-mini{position:absolute;inset:8px;display:flex;flex-direction:column;gap:4px;padding:8px}
+.mb{height:4px;border-radius:2px;background:rgba(255,255,255,.55)}.mb.dk{background:rgba(0,0,0,.12)}
+.mb.w3{width:30%}.mb.w5{width:50%}.mb.w6{width:60%}.mb.w7{width:70%}.mb.w8{width:80%}.mb.w9{width:90%}
+.tc-info{padding:8px 11px 10px}
+.tc-name{font-size:12px;font-weight:600;color:var(--navy)}.tc-desc{font-size:10px;color:var(--gray-400);margin-top:1px}
+.sel-badge{position:absolute;top:6px;right:6px;background:var(--gold);color:var(--navy);font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;display:none}
+.template-card.selected .sel-badge{display:block}
+/* COLORS */
+.color-options{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.color-opt{width:30px;height:30px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .15s;position:relative}
+.color-opt:hover{transform:scale(1.12)}
+.color-opt.selected{border-color:var(--gray-900)}
+.color-opt.selected::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700}
+/* PREVIEW */
+.preview-area{background:#d6d2c8;padding:26px;overflow-y:auto;display:flex;flex-direction:column;align-items:center;gap:18px}
+.preview-toolbar{width:100%;max-width:800px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:10px;padding:10px 17px;box-shadow:var(--shadow)}
+.preview-label{font-size:12px;color:var(--gray-600);font-weight:500}
+.preview-label span{color:var(--navy);font-weight:600}
+.preview-actions{display:flex;gap:8px}
+/* RESUME PAGE */
+.resume-page{width:800px;min-height:1130px;background:white;box-shadow:var(--shadow-md);border-radius:3px;overflow:hidden;transition:box-shadow .3s}
+.resume-page:hover{box-shadow:0 18px 60px rgba(26,39,68,.22)}
+/* ========= TEMPLATE STYLES ========= */
+/* ELEGANCE */
+#rw.tpl-elegance{font-family:'DM Sans',sans-serif}
+#rw.tpl-elegance .rh{background:var(--tc,#1a2744);color:#fff;padding:38px 48px 32px;display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center}
+#rw.tpl-elegance .rn{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;line-height:1.1;margin-bottom:4px}
+#rw.tpl-elegance .rt{font-size:12px;opacity:.7;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+#rw.tpl-elegance .rcs{display:flex;flex-direction:column;gap:5px}
+#rw.tpl-elegance .rc{font-size:12px;opacity:.85;display:flex;align-items:center;gap:6px}
+#rw.tpl-elegance .rb{display:grid;grid-template-columns:248px 1fr}
+#rw.tpl-elegance .rsb{background:#f7f5f0;padding:28px 24px}
+#rw.tpl-elegance .rm{padding:28px 36px}
+#rw.tpl-elegance .st{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--tc,#1a2744);margin-bottom:11px;padding-bottom:5px;border-bottom:2px solid var(--tc,#1a2744)}
+#rw.tpl-elegance .rs{margin-bottom:20px}
+#rw.tpl-elegance .ei{margin-bottom:14px}
+#rw.tpl-elegance .et{font-size:14px;font-weight:600;color:#1a2744}
+#rw.tpl-elegance .ec{font-size:12px;color:var(--tc,#1a2744);font-weight:500}
+#rw.tpl-elegance .ep{font-size:11px;color:#888;margin:2px 0}
+#rw.tpl-elegance .ed{font-size:12px;color:#555;line-height:1.6;margin-top:4px}
+#rw.tpl-elegance .pt{font-size:12px;line-height:1.7;color:#555}
+#rw.tpl-elegance .tl{display:flex;flex-wrap:wrap;gap:5px}
+#rw.tpl-elegance .tg{background:rgba(26,39,68,.08);color:#1a2744;font-size:11px;padding:3px 9px;border-radius:4px}
+/* MODERNO */
+#rw.tpl-moderno{font-family:'DM Sans',sans-serif}
+#rw.tpl-moderno .rh{background:var(--tc,#2c3e50);padding:36px 48px;position:relative;overflow:hidden}
+#rw.tpl-moderno .rh::before{content:'';position:absolute;right:-50px;top:-50px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.05)}
+#rw.tpl-moderno .hc{position:relative;z-index:1;display:flex;align-items:center;gap:26px}
+#rw.tpl-moderno .rn{font-size:28px;font-weight:600;color:#fff;margin-bottom:3px}
+#rw.tpl-moderno .rt{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:12px}
+#rw.tpl-moderno .cg{display:flex;gap:16px;flex-wrap:wrap}
+#rw.tpl-moderno .rc{font-size:11px;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:4px}
+#rw.tpl-moderno .rb{padding:30px 48px}
+#rw.tpl-moderno .bg{display:grid;grid-template-columns:1fr 255px;gap:34px}
+#rw.tpl-moderno .st{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--tc,#2c3e50);margin-bottom:13px;display:flex;align-items:center;gap:9px}
+#rw.tpl-moderno .st::after{content:'';flex:1;height:1px;background:#e0e0e0}
+#rw.tpl-moderno .rs{margin-bottom:22px}
+#rw.tpl-moderno .ei{margin-bottom:16px;padding-left:12px;border-left:2.5px solid var(--tc,#2c3e50)}
+#rw.tpl-moderno .et{font-size:14px;font-weight:600;color:#222}
+#rw.tpl-moderno .ec{font-size:12px;color:var(--tc,#2c3e50);font-weight:500}
+#rw.tpl-moderno .ep{font-size:11px;color:#999;margin:2px 0 4px}
+#rw.tpl-moderno .ed{font-size:12px;color:#666;line-height:1.65}
+#rw.tpl-moderno .sp{display:inline-block;background:#f0f4f8;color:#333;font-size:11px;padding:4px 10px;border-radius:20px;margin:3px}
+#rw.tpl-moderno .pt{font-size:13px;color:#555;line-height:1.7}
+/* MINIMALISTA */
+#rw.tpl-minimalista{font-family:'DM Sans',sans-serif}
+#rw.tpl-minimalista .rh{padding:46px 56px 28px;border-bottom:3px solid var(--tc,#2c3e50)}
+#rw.tpl-minimalista .ht{display:flex;justify-content:space-between;align-items:flex-end}
+#rw.tpl-minimalista .rn{font-size:36px;font-weight:600;color:#111;letter-spacing:-1px}
+#rw.tpl-minimalista .rt{font-size:13px;color:#777;margin-top:3px}
+#rw.tpl-minimalista .cr{text-align:right}
+#rw.tpl-minimalista .rc{font-size:12px;color:#666;margin-bottom:3px}
+#rw.tpl-minimalista .rb{padding:30px 56px}
+#rw.tpl-minimalista .rs{margin-bottom:26px;display:grid;grid-template-columns:145px 1fr;gap:18px}
+#rw.tpl-minimalista .st{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--tc,#2c3e50);padding-top:2px}
+#rw.tpl-minimalista .ei{margin-bottom:14px}
+#rw.tpl-minimalista .et{font-size:14px;font-weight:600;color:#111}
+#rw.tpl-minimalista .ec{font-size:12px;color:#555}
+#rw.tpl-minimalista .ep{font-size:11px;color:#aaa;margin:2px 0 4px}
+#rw.tpl-minimalista .ed{font-size:12px;color:#666;line-height:1.65}
+#rw.tpl-minimalista .si{display:flex;flex-wrap:wrap;gap:6px}
+#rw.tpl-minimalista .sc{font-size:11px;color:#444;padding:3px 9px;border:1px solid #ddd;border-radius:4px}
+#rw.tpl-minimalista .pt{font-size:13px;color:#555;line-height:1.7}
+/* CRIATIVO */
+#rw.tpl-criativo{font-family:'DM Sans',sans-serif;display:grid;grid-template-columns:255px 1fr;min-height:1130px}
+#rw.tpl-criativo .rsb{background:var(--tc,#6c3483);color:#fff;padding:34px 22px}
+#rw.tpl-criativo .pw{text-align:center;margin-bottom:22px}
+#rw.tpl-criativo .rn{font-size:18px;font-weight:700;line-height:1.2;text-align:center}
+#rw.tpl-criativo .rt{font-size:10px;opacity:.7;text-align:center;margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+#rw.tpl-criativo .ss{margin-bottom:20px}
+#rw.tpl-criativo .st{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.6;margin-bottom:9px}
+#rw.tpl-criativo .rc{font-size:11px;opacity:.9;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+#rw.tpl-criativo .sdr{margin-bottom:9px}
+#rw.tpl-criativo .sdn{font-size:12px;margin-bottom:3px}
+#rw.tpl-criativo .sdd{display:flex;gap:3px}
+#rw.tpl-criativo .dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25)}
+#rw.tpl-criativo .dot.on{background:rgba(255,255,255,.9)}
+#rw.tpl-criativo .rm{padding:34px 30px;background:#fff}
+#rw.tpl-criativo .ms{margin-bottom:22px}
+#rw.tpl-criativo .mst{font-size:13px;font-weight:700;color:var(--tc,#6c3483);margin-bottom:11px;padding-bottom:5px;border-bottom:2px solid var(--tc,#6c3483)}
+#rw.tpl-criativo .ei{margin-bottom:13px}
+#rw.tpl-criativo .et{font-size:13px;font-weight:600;color:#222}
+#rw.tpl-criativo .ec{font-size:12px;color:#666}
+#rw.tpl-criativo .ep{font-size:11px;color:#999;margin:2px 0 4px}
+#rw.tpl-criativo .ed{font-size:12px;color:#666;line-height:1.6}
+#rw.tpl-criativo .pt{font-size:12px;color:#555;line-height:1.7}
+#rw.tpl-criativo .ctg{display:inline-block;font-size:11px;padding:3px 9px;border-radius:4px;margin:3px;background:rgba(108,52,131,.1);color:var(--tc,#6c3483)}
+/* EXECUTIVO */
+#rw.tpl-executivo{font-family:'Crimson Text',serif}
+#rw.tpl-executivo .rh{background:var(--tc,#1a2744);color:#fff;padding:28px 56px;text-align:center}
+#rw.tpl-executivo .rn{font-size:32px;font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-bottom:5px}
+#rw.tpl-executivo .rt{font-size:15px;opacity:.75;letter-spacing:2px;font-style:italic;margin-bottom:13px}
+#rw.tpl-executivo .cl{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+#rw.tpl-executivo .rc{font-size:12px;opacity:.8;display:flex;align-items:center;gap:4px;font-family:'DM Sans',sans-serif}
+#rw.tpl-executivo .rb{padding:30px 56px}
+#rw.tpl-executivo .rs{margin-bottom:22px}
+#rw.tpl-executivo .sd{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+#rw.tpl-executivo .sd::before,.sd::after{content:'';flex:1;height:1px;background:#ccc}
+#rw.tpl-executivo .st{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--tc,#1a2744);text-align:center}
+#rw.tpl-executivo .ei{margin-bottom:16px;display:grid;grid-template-columns:125px 1fr;gap:16px}
+#rw.tpl-executivo .ep{font-size:11px;color:#999;font-family:'DM Sans',sans-serif;padding-top:2px}
+#rw.tpl-executivo .et{font-size:15px;font-weight:600;color:#111}
+#rw.tpl-executivo .ec{font-size:13px;color:#555;font-style:italic}
+#rw.tpl-executivo .ed{font-size:12px;color:#666;line-height:1.65;margin-top:4px;font-family:'DM Sans',sans-serif;font-style:normal}
+#rw.tpl-executivo .skc{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+#rw.tpl-executivo .ski{font-size:13px;color:#444;padding:3px 0;border-bottom:1px solid #eee}
+#rw.tpl-executivo .pt{font-size:14px;color:#555;line-height:1.75;text-align:center;font-style:italic}
+/* VERDE */
+#rw.tpl-verde{font-family:'DM Sans',sans-serif}
+#rw.tpl-verde .rh{background:var(--tc,#1a4a2e);color:#fff;padding:34px 48px;display:flex;align-items:center;gap:26px}
+#rw.tpl-verde .hi{flex:1}
+#rw.tpl-verde .rn{font-size:27px;font-weight:700;margin-bottom:3px}
+#rw.tpl-verde .rt{font-size:12px;opacity:.75;margin-bottom:13px}
+#rw.tpl-verde .cg{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+#rw.tpl-verde .rc{font-size:11px;opacity:.9;display:flex;align-items:center;gap:5px}
+#rw.tpl-verde .rb{display:grid;grid-template-columns:1fr 215px}
+#rw.tpl-verde .rm{padding:28px 34px 28px 48px}
+#rw.tpl-verde .rsb{background:#f4f9f6;padding:28px 20px;border-left:1px solid #e0ece6}
+#rw.tpl-verde .st{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--tc,#1a4a2e);margin-bottom:11px;padding-bottom:5px;border-bottom:2px solid var(--tc,#1a4a2e)}
+#rw.tpl-verde .rs{margin-bottom:20px}
+#rw.tpl-verde .ei{margin-bottom:14px;padding-left:11px;border-left:2px solid #b8d9c5}
+#rw.tpl-verde .et{font-size:13px;font-weight:600;color:#111}
+#rw.tpl-verde .ec{font-size:12px;color:var(--tc,#1a4a2e);font-weight:500}
+#rw.tpl-verde .ep{font-size:11px;color:#999;margin:2px 0 4px}
+#rw.tpl-verde .ed{font-size:12px;color:#666;line-height:1.65}
+#rw.tpl-verde .vtg{display:inline-block;background:rgba(26,74,46,.1);color:var(--tc,#1a4a2e);font-size:11px;padding:3px 9px;border-radius:4px;margin:3px 3px 0 0}
+#rw.tpl-verde .pt{font-size:12px;color:#555;line-height:1.7}
+/* TECH */
+#rw.tpl-tech{font-family:'DM Sans',sans-serif}
+#rw.tpl-tech .rh{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff;padding:36px 48px;display:flex;gap:26px;align-items:center}
+#rw.tpl-tech .hi{flex:1}
+#rw.tpl-tech .rn{font-size:28px;font-weight:700;color:#fff;margin-bottom:4px}
+#rw.tpl-tech .rt{font-size:13px;color:var(--tc,#4fc3f7);margin-bottom:14px;letter-spacing:1px}
+#rw.tpl-tech .cg{display:flex;gap:15px;flex-wrap:wrap}
+#rw.tpl-tech .rc{font-size:11px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:5px}
+#rw.tpl-tech .rb{display:grid;grid-template-columns:1fr 230px}
+#rw.tpl-tech .rm{padding:30px 38px}
+#rw.tpl-tech .rsb{background:#f8fafc;padding:30px 20px;border-left:3px solid var(--tc,#4fc3f7)}
+#rw.tpl-tech .st{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--tc,#4fc3f7);margin-bottom:12px}
+#rw.tpl-tech .stm{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#203a43;margin-bottom:12px;padding-bottom:5px;border-bottom:2px solid var(--tc,#4fc3f7)}
+#rw.tpl-tech .rs{margin-bottom:22px}
+#rw.tpl-tech .ei{margin-bottom:14px}
+#rw.tpl-tech .et{font-size:14px;font-weight:600;color:#1a2744}
+#rw.tpl-tech .ec{font-size:12px;color:var(--tc,#4fc3f7);font-weight:600}
+#rw.tpl-tech .ep{font-size:11px;color:#999;margin:2px 0 4px;font-family:monospace}
+#rw.tpl-tech .ed{font-size:12px;color:#555;line-height:1.65}
+#rw.tpl-tech .ctg{display:inline-block;background:#1e3a4a;color:#4fc3f7;font-size:11px;padding:3px 9px;border-radius:4px;margin:3px;font-family:monospace}
+#rw.tpl-tech .pt{font-size:12px;color:#555;line-height:1.7}
+#rw.tpl-tech .lb{margin-bottom:9px}
+#rw.tpl-tech .lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+#rw.tpl-tech .lbt{height:3px;background:#e0e0e0;border-radius:2px}
+#rw.tpl-tech .lbf{height:3px;border-radius:2px;background:var(--tc,#4fc3f7)}
+/* ACADEMICO */
+#rw.tpl-academico{font-family:'Crimson Text',serif}
+#rw.tpl-academico .rh{background:var(--tc,#7b1113);color:#fff;padding:34px 58px;text-align:center}
+#rw.tpl-academico .rn{font-size:30px;font-weight:600;margin-bottom:5px}
+#rw.tpl-academico .rt{font-size:15px;opacity:.8;font-style:italic;margin-bottom:13px}
+#rw.tpl-academico .cl{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+#rw.tpl-academico .rc{font-size:12px;opacity:.85;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px}
+#rw.tpl-academico .rb{padding:34px 58px}
+#rw.tpl-academico .rs{margin-bottom:24px}
+#rw.tpl-academico .st{font-size:17px;font-weight:600;color:var(--tc,#7b1113);margin-bottom:11px;padding-bottom:4px;border-bottom:1px solid var(--tc,#7b1113)}
+#rw.tpl-academico .ei{margin-bottom:15px}
+#rw.tpl-academico .et{font-size:15px;font-weight:600;color:#111}
+#rw.tpl-academico .ec{font-size:13px;color:#555;font-style:italic}
+#rw.tpl-academico .ep{font-size:12px;color:#999;margin:2px 0 4px;font-family:'DM Sans',sans-serif}
+#rw.tpl-academico .ed{font-size:13px;color:#555;line-height:1.7}
+#rw.tpl-academico .pt{font-size:15px;color:#444;line-height:1.8}
+#rw.tpl-academico .skc{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#rw.tpl-academico .ski{font-size:14px;color:#333;padding:3px 0}
+/* COLORS */
+.color-navy{--tc:#1a2744}.color-blue{--tc:#1a5276}.color-teal{--tc:#0e6655}
+.color-verde{--tc:#1a4a2e}.color-gray{--tc:#2c3e50}.color-red{--tc:#922b21}
+.color-purple{--tc:#6c3483}.color-orange{--tc:#d35400}.color-tech{--tc:#4fc3f7}.color-wine{--tc:#7b1113}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:14px;padding:26px;max-width:440px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,.25)}
+.modal h2{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:7px}
+.modal p{font-size:13px;color:var(--gray-600);margin-bottom:15px}
+.modal-actions{display:flex;gap:9px;justify-content:flex-end}
+.tip-panel{background:#f7f5f0;border-radius:8px;padding:12px;font-size:12px;color:#555;margin-bottom:16px;line-height:1.6}
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--navy);color:#fff;padding:11px 16px;border-radius:9px;font-size:13px;font-weight:500;box-shadow:var(--shadow-md);z-index:2000;display:flex;align-items:center;gap:7px;transform:translateY(80px);opacity:0;transition:all .3s}
+.toast.show{transform:translateY(0);opacity:1}.toast.ok{background:#27ae60}
+/* PRINT */
+@media print{header,.sidebar,.preview-toolbar,.modal-overlay,.toast{display:none!important}body{background:#fff!important}.app-container{display:block!important}.preview-area{background:#fff!important;padding:0!important}.resume-page{box-shadow:none!important;width:100%!important;border-radius:0!important}}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--gray-200);border-radius:3px}
+.section-hint{font-size:11px;color:var(--gray-400);margin-bottom:11px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Currículo<span>Pro</span></div>
+  <div class="header-center">
+    <div class="progress-wrap"><div class="progress-fill" id="progressBar"></div></div>
+    <div class="progress-lbl" id="progressLbl">Comece preenchendo seus dados</div>
+  </div>
+  <div class="header-actions">
+    <div class="save-badge" id="saveBadge">○ não salvo</div>
+    <button class="btn btn-outline" onclick="confirmClear()">Limpar</button>
+    <button class="btn btn-outline" onclick="openPrintModal()">🖨️ Imprimir</button>
+    <button class="btn btn-gold" id="pdfBtn" onclick="downloadPDF()">⬇ Baixar PDF</button>
+  </div>
+</header>
+
+<div class="app-container">
+  <div class="sidebar">
+    <div class="sidebar-tabs">
+      <button class="sidebar-tab active" onclick="switchTab(this,'dados')">✏️ Dados</button>
+      <button class="sidebar-tab" onclick="switchTab(this,'template')">🎨 Template</button>
+      <button class="sidebar-tab" onclick="switchTab(this,'cores')">🎨 Cores</button>
+    </div>
+
+    <!-- DADOS -->
+    <div id="tab-dados" class="sidebar-content active">
+
+      <div class="form-section open">
+        <div class="form-section-header" onclick="toggleSection(this)">
+          <h3>👤 Informações Pessoais</h3><span class="toggle-icon">▾</span>
+        </div>
+        <div class="form-section-body">
+          <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+            <input type="file" id="photoInput" accept="image/*" onchange="handlePhoto(event)" style="display:none">
+            <div id="photoPlaceholder"><div style="font-size:26px;color:#ccc">📷</div><div class="photo-upload-text">Clique para adicionar foto</div></div>
+            <img id="photoPreview" class="photo-preview" style="display:none" alt="Foto">
+          </div>
+          <div style="margin-top:11px">
+            <div class="form-group"><label>Nome Completo</label><input type="text" id="nomeCompleto" placeholder="Ex: Maria Silva Santos" oninput="updatePreview()"></div>
+            <div class="form-group"><label>Cargo / Título Profissional</label><input type="text" id="tituloprofissional" placeholder="Ex: Gerente de Projetos" oninput="updatePreview()"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="email@exemplo.com" oninput="updatePreview()"></div>
+              <div class="form-group"><label>Telefone</label><input type="tel" id="telefone" placeholder="(11) 99999-9999" oninput="updatePreview()"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Cidade / Estado</label><input type="text" id="localidade" placeholder="São Paulo, SP" oninput="updatePreview()"></div>
+              <div class="form-group"><label>LinkedIn</label><input type="text" id="linkedin" placeholder="linkedin.com/in/..." oninput="updatePreview()"></div>
+            </div>
+            <div class="form-group"><label>Site / Portfólio</label><input type="text" id="website" placeholder="www.meusite.com.br" oninput="updatePreview()"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section open">
+        <div class="form-section-header" onclick="toggleSection(this)">
+          <h3>📝 Perfil Profissional</h3><span class="toggle-icon">▾</span>
+        </div>
+        <div class="form-section-body">
+          <div class="tip-box"><span class="tip-icon">💡</span><span>Escreva 3–5 linhas destacando sua experiência e especialidade. Evite frases genéricas como "sou dedicado e proativo".</span></div>
+          <div class="textarea-wrap">
+            <textarea id="perfil" rows="4" maxlength="600" placeholder="Ex: Profissional com mais de 8 anos de experiência em gestão de projetos, especialista em metodologias ágeis e liderança de equipes..." oninput="updatePreview();updateCharCount(this,'cc_perfil',600)"></textarea>
+            <span class="char-count" id="cc_perfil">0/600</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section open">
+        <div class="form-section-header" onclick="toggleSection(this)">
+          <h3>💼 Experiência Profissional</h3><span class="toggle-icon">▾</span>
+        </div>
+        <div class="form-section-body">
+          <div class="tip-box"><span class="tip-icon">💡</span><span>Use verbos de ação e números: <em>"Aumentei as vendas em 30%"</em> é muito melhor que <em>"Responsável pelas vendas"</em>.</span></div>
+          <div id="expList"></div>
+          <button class="add-item-btn" onclick="addExp()">＋ Adicionar Experiência</button>
+        </div>
+      </div>
+
+      <div class="form-section open">
+        <div class="form-section-header" onclick="toggleSection(this)">
+          <h3>🎓 Formação Acadêmica</h3><span class="toggle-icon">▾</span>
+        </div>
+        <div class="form-section-body">
+          <div id="eduList"></div>
+          <button class="add-item-btn" onclick="addEdu()">＋ Adicionar Formação</button>
+        </div>
+      </div>
+
+      <div class="form-section open">
+        <div class="form-section-header" onclick="toggleSection(this)">
+          <h3>⚡ Habilidades</h3><span class="toggle-icon">▾</span>
+        </div>
+        <div class="form-section-body">
+          <div class="tip-box"><span class="tip-icon">💡</span><span>Inclua habilidades técnicas e interpessoais relevantes para a vaga. Seja específico: "Excel Avançado" é melhor que "Informática".</span></div>
+          <div id="skillList" class="skill-list"></div>
+          <div class="skill-input-row">
+            <input type="text" id="skillInput" placeholder="Ex: Excel, Python, Gestão..." onkeydown="if(event.key==='Enter')addSkill()">
+            <button class="btn btn-navy btn-sm" onclick="addSkill()">Add</button>
+          </div>
+          <div class="suggested-skills" id="suggList"></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-header" onclick="toggleSection(this)">
+          <h3>🌍 Idiomas</h3><span class="toggle-icon">▾</span>
+        </div>
+        <div class="form-section-body">
+          <div id="langList"></div>
+          <button class="add-item-btn" onclick="addLang()">＋ Adicionar Idioma</button>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-header" onclick="toggleSection(this)">
+          <h3>🏆 Certificações</h3><span class="toggle-icon">▾</span>
+        </div>
+        <div class="form-section-body">
+          <div id="certList"></div>
+          <button class="add-item-btn" onclick="addCert()">＋ Adicionar Certificação</button>
+        </div>
+      </div>
+
+    </div><!-- end dados -->
+
+    <!-- TEMPLATE -->
+    <div id="tab-template" class="sidebar-content">
+      <p class="section-hint" style="margin-bottom:13px">Escolha o template ideal para seu perfil profissional</p>
+      <div class="template-grid">
+        <div class="template-card tc-elegance selected" onclick="selectTemplate('elegance',this)">
+          <div class="template-preview"><div class="tpl-mini"><div class="mb w5"></div><div class="mb w3"></div><div style="height:6px"></div><div class="mb w9"></div><div class="mb w7"></div><div class="mb w8"></div></div></div>
+          <div class="sel-badge">✓ Ativo</div>
+          <div class="tc-info"><div class="tc-name">Elegance</div><div class="tc-desc">Clássico e sofisticado</div></div>
+        </div>
+        <div class="template-card tc-moderno" onclick="selectTemplate('moderno',this)">
+          <div class="template-preview"><div class="tpl-mini"><div class="mb w7"></div><div class="mb w4" style="width:40%"></div><div style="height:6px"></div><div class="mb w9"></div><div class="mb w6"></div></div></div>
+          <div class="sel-badge">✓ Ativo</div>
+          <div class="tc-info"><div class="tc-name">Moderno</div><div class="tc-desc">Contemporâneo e dinâmico</div></div>
+        </div>
+        <div class="template-card tc-minimalista" onclick="selectTemplate('minimalista',this)">
+          <div class="template-preview"><div class="tpl-mini"><div class="mb dk w6"></div><div class="mb dk" style="width:35%"></div><div style="height:6px"></div><div class="mb dk w8"></div><div class="mb dk w7"></div></div></div>
+          <div class="sel-badge">✓ Ativo</div>
+          <div class="tc-info"><div class="tc-name">Minimalista</div><div class="tc-desc">Limpo e direto ao ponto</div></div>
+        </div>
+        <div class="template-card tc-criativo" onclick="selectTemplate('criativo',this)">
+          <div class="template-preview"><div class="tpl-mini"><div class="mb w5"></div><div class="mb w3"></div><div style="height:6px"></div><div class="mb w8"></div><div class="mb w6"></div></div></div>
+          <div class="sel-badge">✓ Ativo</div>
+          <div class="tc-info"><div class="tc-name">Criativo</div><div class="tc-desc">Sidebar colorida e moderna</div></div>
+        </div>
+        <div class="template-card tc-executivo" onclick="selectTemplate('executivo',this)">
+          <div class="template-preview"><div class="tpl-mini"><div class="mb w6" style="margin:0 auto 4px"></div><div class="mb" style="width:40%;margin:0 auto 8px"></div><div class="mb w8" style="margin:0 auto 4px"></div><div class="mb w7" style="margin:0 auto"></div></div></div>
+          <div class="sel-badge">✓ Ativo</div>
+          <div class="tc-info"><div class="tc-name">Executivo</div><div class="tc-desc">Formal e imponente</div></div>
+        </div>
+        <div class="template-card tc-verde" onclick="selectTemplate('verde',this)">
+          <div class="template-preview"><div class="tpl-mini"><div class="mb w5"></div><div class="mb w3"></div><div style="height:6px"></div><div class="mb w9"></div><div class="mb w7"></div></div></div>
+          <div class="sel-badge">✓ Ativo</div>
+          <div class="tc-info"><div class="tc-name">Nature</div><div class="tc-desc">Fresco e sustentável</div></div>
+        </div>
+        <div class="template-card tc-tech" onclick="selectTemplate('tech',this)">
+          <div class="template-preview"><div class="tpl-mini"><div class="mb w7"></div><div class="mb w4" style="width:40%"></div><div style="height:6px"></div><div class="mb w9"></div><div class="mb w6"></div></div></div>
+          <div class="sel-badge">✓ Ativo</div>
+          <div class="tc-info"><div class="tc-name">Tech</div><div class="tc-desc">Para área de tecnologia</div></div>
+        </div>
+        <div class="template-card tc-academico" onclick="selectTemplate('academico',this)">
+          <div class="template-preview"><div class="tpl-mini"><div class="mb w6" style="margin:0 auto 4px"></div><div class="mb" style="width:45%;margin:0 auto 8px"></div><div class="mb dk w8" style="margin:0 auto 4px"></div><div class="mb dk w7" style="margin:0 auto"></div></div></div>
+          <div class="sel-badge">✓ Ativo</div>
+          <div class="tc-info"><div class="tc-name">Acadêmico</div><div class="tc-desc">Para pesquisadores e docentes</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CORES -->
+    <div id="tab-cores" class="sidebar-content">
+      <p class="section-hint" style="margin-bottom:14px">Personalize a cor principal do seu currículo</p>
+      <label style="text-transform:none;font-size:13px;font-weight:600;color:var(--navy)">Cor Principal</label>
+      <div class="color-options">
+        <div class="color-opt selected" style="background:#1a2744" onclick="selectColor(this,'navy')" title="Navy"></div>
+        <div class="color-opt" style="background:#1a5276" onclick="selectColor(this,'blue')" title="Azul"></div>
+        <div class="color-opt" style="background:#0e6655" onclick="selectColor(this,'teal')" title="Petróleo"></div>
+        <div class="color-opt" style="background:#1a4a2e" onclick="selectColor(this,'verde')" title="Verde"></div>
+        <div class="color-opt" style="background:#2c3e50" onclick="selectColor(this,'gray')" title="Grafite"></div>
+        <div class="color-opt" style="background:#922b21" onclick="selectColor(this,'red')" title="Vinho"></div>
+        <div class="color-opt" style="background:#6c3483" onclick="selectColor(this,'purple')" title="Roxo"></div>
+        <div class="color-opt" style="background:#d35400" onclick="selectColor(this,'orange')" title="Terracota"></div>
+        <div class="color-opt" style="background:#4fc3f7" onclick="selectColor(this,'tech')" title="Azul Tech"></div>
+        <div class="color-opt" style="background:#7b1113" onclick="selectColor(this,'wine')" title="Bordô"></div>
+      </div>
+      <div style="margin-top:24px">
+        <label style="text-transform:none;font-size:13px;font-weight:600;color:var(--navy)">Tamanho da Fonte</label>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn btn-sm btn-outline font-size-btn active-font" onclick="setFontSize(this,'small')">Pequena</button>
+          <button class="btn btn-sm btn-outline font-size-btn" onclick="setFontSize(this,'normal')">Normal</button>
+          <button class="btn btn-sm btn-outline font-size-btn" onclick="setFontSize(this,'large')">Grande</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end sidebar -->
+
+  <!-- PREVIEW -->
+  <div class="preview-area">
+    <div class="preview-toolbar">
+      <div class="preview-label">Pré-visualização — <span id="templateLabel">Elegance</span></div>
+      <div class="preview-actions">
+        <button class="btn btn-outline btn-sm" onclick="openPrintModal()">🖨️ Imprimir</button>
+        <button class="btn btn-gold btn-sm" onclick="downloadPDF()">⬇ Baixar PDF</button>
+      </div>
+    </div>
+    <div id="rw" class="resume-page tpl-elegance color-navy"></div>
+  </div>
+</div>
+
+<!-- MODAL IMPRESSÃO -->
+<div class="modal-overlay" id="printModal">
+  <div class="modal">
+    <h2>🖨️ Imprimir Currículo</h2>
+    <p>Para salvar como PDF, selecione <strong>"Salvar como PDF"</strong> na lista de impressoras.</p>
+    <div class="tip-panel">
+      <strong>Dicas para melhor resultado:</strong><br>
+      • Desmarque "Cabeçalhos e rodapés"<br>
+      • Configure margens como "Nenhuma" ou "Mínima"<br>
+      • Ative "Gráficos de fundo" para preservar as cores
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('printModal').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-gold" onclick="document.getElementById('printModal').classList.remove('open');window.print()">Abrir Impressão</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL LIMPAR -->
+<div class="modal-overlay" id="clearModal">
+  <div class="modal">
+    <h2>🗑️ Limpar tudo?</h2>
+    <p>Todos os seus dados serão apagados, incluindo o progresso salvo. Esta ação não pode ser desfeita.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('clearModal').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-danger" onclick="clearAll()">Sim, limpar tudo</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+// ===== STATE =====
+let state = {
+  template:'elegance', color:'navy', fontSize:'small', photo:null,
+  experiencias:[], formacoes:[], skills:[], idiomas:[], certifications:[]
+};
+
+const SUGGESTIONS = ['Excel Avançado','Power BI','Gestão de Projetos','Liderança','Comunicação','Trabalho em Equipe','Scrum','Photoshop','Python','JavaScript','SQL','Inglês','Negociação','Atendimento ao Cliente','AutoCAD','SAP'];
+
+// ===== TABS =====
+function switchTab(btn,tab){
+  document.querySelectorAll('.sidebar-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.sidebar-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+function toggleSection(header){ header.parentElement.classList.toggle('open'); }
+
+// ===== TEMPLATE & COLOR =====
+function selectTemplate(name,card){
+  state.template=name;
+  document.querySelectorAll('.template-card').forEach(c=>c.classList.remove('selected'));
+  card.classList.add('selected');
+  const labels={elegance:'Elegance',moderno:'Moderno',minimalista:'Minimalista',criativo:'Criativo',executivo:'Executivo',verde:'Nature',tech:'Tech',academico:'Acadêmico'};
+  document.getElementById('templateLabel').textContent=labels[name]||name;
+  updatePreview();
+}
+
+function selectColor(el,color){
+  state.color=color;
+  document.querySelectorAll('.color-opt').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  updatePreview();
+}
+
+function setFontSize(btn,size){
+  state.fontSize=size;
+  document.querySelectorAll('.font-size-btn').forEach(b=>b.classList.remove('active-font'));
+  btn.classList.add('active-font');
+  updatePreview();
+}
+
+// ===== PHOTO =====
+function handlePhoto(e){
+  const file=e.target.files[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    state.photo=ev.target.result;
+    document.getElementById('photoPreview').src=state.photo;
+    document.getElementById('photoPreview').style.display='block';
+    document.getElementById('photoPlaceholder').style.display='none';
+    updatePreview();
+  };
+  reader.readAsDataURL(file);
+}
+
+// ===== EXPERIENCE =====
+let expCount=0;
+function addExp(){
+  expCount++;
+  const id='exp'+expCount;
+  state.experiencias.push({id,cargo:'',empresa:'',periodo:'',desc:''});
+  renderExpList();
+}
+function removeExp(id){ state.experiencias=state.experiencias.filter(e=>e.id!==id); renderExpList(); updatePreview(); }
+function renderExpList(){
+  const c=document.getElementById('expList'); c.innerHTML='';
+  state.experiencias.forEach((exp,idx)=>{
+    const el=document.createElement('div'); el.className='repeat-item';
+    el.innerHTML=`<div class="repeat-item-header"><span class="repeat-item-title">Experiência ${idx+1}</span><button class="btn btn-danger btn-icon">✕</button></div>
+    <div class="form-group"><label>Cargo</label><input type="text" value="${h(exp.cargo)}" placeholder="Ex: Analista de Marketing" data-field="cargo"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Empresa</label><input type="text" value="${h(exp.empresa)}" placeholder="Nome da empresa" data-field="empresa"></div>
+      <div class="form-group"><label>Período</label><input type="text" value="${h(exp.periodo)}" placeholder="Jan 2020 – Atual" data-field="periodo"></div>
+    </div>
+    <div class="form-group"><label>Descrição</label><textarea placeholder="Descreva suas responsabilidades e conquistas..." data-field="desc">${h(exp.desc)}</textarea></div>`;
+    el.querySelector('.btn-danger').addEventListener('click',()=>removeExp(exp.id));
+    el.querySelectorAll('[data-field]').forEach(inp=>inp.addEventListener('input',()=>{exp[inp.dataset.field]=inp.value;updatePreview();}));
+    c.appendChild(el);
+  });
+}
+
+// ===== EDUCATION =====
+let eduCount=0;
+function addEdu(){
+  eduCount++;
+  const id='edu'+eduCount;
+  state.formacoes.push({id,curso:'',instituicao:'',ano:''});
+  renderEduList();
+}
+function removeEdu(id){ state.formacoes=state.formacoes.filter(e=>e.id!==id); renderEduList(); updatePreview(); }
+function renderEduList(){
+  const c=document.getElementById('eduList'); c.innerHTML='';
+  state.formacoes.forEach((edu,idx)=>{
+    const el=document.createElement('div'); el.className='repeat-item';
+    el.innerHTML=`<div class="repeat-item-header"><span class="repeat-item-title">Formação ${idx+1}</span><button class="btn btn-danger btn-icon">✕</button></div>
+    <div class="form-group"><label>Curso / Grau</label><input type="text" value="${h(edu.curso)}" placeholder="Ex: Bacharelado em Administração" data-field="curso"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Instituição</label><input type="text" value="${h(edu.instituicao)}" placeholder="Nome da instituição" data-field="instituicao"></div>
+      <div class="form-group"><label>Ano</label><input type="text" value="${h(edu.ano)}" placeholder="2019 – 2023" data-field="ano"></div>
+    </div>`;
+    el.querySelector('.btn-danger').addEventListener('click',()=>removeEdu(edu.id));
+    el.querySelectorAll('[data-field]').forEach(inp=>inp.addEventListener('input',()=>{edu[inp.dataset.field]=inp.value;updatePreview();}));
+    c.appendChild(el);
+  });
+}
+
+// ===== SKILLS =====
+function addSkill(){
+  const inp=document.getElementById('skillInput'); const val=inp.value.trim(); if(!val)return;
+  addSkillDirect(val); inp.value=''; inp.focus();
+}
+function addSkillDirect(val){
+  if(state.skills.includes(val))return;
+  state.skills.push(val); renderSkillList(); renderSuggestions(); updatePreview();
+}
+function removeSkill(s){ state.skills=state.skills.filter(x=>x!==s); renderSkillList(); renderSuggestions(); updatePreview(); }
+function renderSkillList(){
+  const c=document.getElementById('skillList'); c.innerHTML='';
+  state.skills.forEach(s=>{
+    const t=document.createElement('div'); t.className='skill-tag';
+    t.innerHTML=`${h(s)}<button title="Remover">×</button>`;
+    t.querySelector('button').addEventListener('click',()=>removeSkill(s));
+    c.appendChild(t);
+  });
+}
+function renderSuggestions(){
+  const c=document.getElementById('suggList'); c.innerHTML='';
+  SUGGESTIONS.filter(s=>!state.skills.includes(s)).slice(0,8).forEach(s=>{
+    const b=document.createElement('button'); b.className='sugg-chip'; b.textContent='+ '+s;
+    b.addEventListener('click',()=>addSkillDirect(s)); c.appendChild(b);
+  });
+}
+
+// ===== LANGUAGES =====
+let langCount=0;
+function addLang(){
+  langCount++;
+  const id='lang'+langCount;
+  state.idiomas.push({id,idioma:'',nivel:'Intermediário'});
+  renderLangList();
+}
+function removeLang(id){ state.idiomas=state.idiomas.filter(l=>l.id!==id); renderLangList(); updatePreview(); }
+function renderLangList(){
+  const c=document.getElementById('langList'); c.innerHTML='';
+  state.idiomas.forEach((lang,idx)=>{
+    const levels=['Básico','Pré-intermediário','Intermediário','Avançado','Fluente','Nativo'];
+    const el=document.createElement('div'); el.className='repeat-item';
+    el.innerHTML=`<div class="repeat-item-header"><span class="repeat-item-title">Idioma ${idx+1}</span><button class="btn btn-danger btn-icon">✕</button></div>
+    <div class="form-row">
+      <div class="form-group"><label>Idioma</label><input type="text" value="${h(lang.idioma)}" placeholder="Ex: Inglês" data-field="idioma"></div>
+      <div class="form-group"><label>Nível</label>
+        <select data-field="nivel">${levels.map(n=>`<option${lang.nivel===n?' selected':''}>${n}</option>`).join('')}</select>
+      </div>
+    </div>`;
+    el.querySelector('.btn-danger').addEventListener('click',()=>removeLang(lang.id));
+    el.querySelectorAll('[data-field]').forEach(inp=>{
+      inp.addEventListener('input',()=>{lang[inp.dataset.field]=inp.value;updatePreview();});
+      inp.addEventListener('change',()=>{lang[inp.dataset.field]=inp.value;updatePreview();});
+    });
+    c.appendChild(el);
+  });
+}
+
+// ===== CERTIFICATIONS =====
+let certCount=0;
+function addCert(){
+  certCount++;
+  const id='cert'+certCount;
+  state.certifications.push({id,nome:'',emissor:'',ano:''});
+  renderCertList();
+}
+function removeCert(id){ state.certifications=state.certifications.filter(c=>c.id!==id); renderCertList(); updatePreview(); }
+function renderCertList(){
+  const c=document.getElementById('certList'); c.innerHTML='';
+  state.certifications.forEach((cert,idx)=>{
+    const el=document.createElement('div'); el.className='repeat-item';
+    el.innerHTML=`<div class="repeat-item-header"><span class="repeat-item-title">Certificação ${idx+1}</span><button class="btn btn-danger btn-icon">✕</button></div>
+    <div class="form-group"><label>Nome da Certificação</label><input type="text" value="${h(cert.nome)}" placeholder="Ex: PMP, AWS Solutions Architect..." data-field="nome"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Emissor</label><input type="text" value="${h(cert.emissor)}" placeholder="Ex: PMI, Amazon" data-field="emissor"></div>
+      <div class="form-group"><label>Ano</label><input type="text" value="${h(cert.ano)}" placeholder="2023" data-field="ano"></div>
+    </div>`;
+    el.querySelector('.btn-danger').addEventListener('click',()=>removeCert(cert.id));
+    el.querySelectorAll('[data-field]').forEach(inp=>inp.addEventListener('input',()=>{cert[inp.dataset.field]=inp.value;updatePreview();}));
+    c.appendChild(el);
+  });
+}
+
+// ===== CHAR COUNT =====
+function updateCharCount(el,id,max){
+  const c=document.getElementById(id); if(!c)return;
+  const n=el.value.length; c.textContent=n+'/'+max;
+  c.className='char-count'+(n>max*0.9?' warn':'')+(n>=max?' over':'');
+}
+
+// ===== PROGRESS =====
+function updateProgress(){
+  const fields=['nomeCompleto','tituloprofissional','email','telefone','localidade','perfil'];
+  let filled=fields.filter(id=>{const el=document.getElementById(id);return el&&el.value.trim()}).length;
+  if(state.experiencias.some(e=>e.cargo))filled++;
+  if(state.formacoes.some(e=>e.curso))filled++;
+  if(state.skills.length)filled++;
+  const total=fields.length+3;
+  const pct=Math.round((filled/total)*100);
+  document.getElementById('progressBar').style.width=pct+'%';
+  const lbl=document.getElementById('progressLbl');
+  if(pct<30)lbl.textContent='Continue preenchendo seus dados';
+  else if(pct<60)lbl.textContent='Bom progresso! Continue...';
+  else if(pct<90)lbl.textContent='Quase pronto! Revise o currículo';
+  else lbl.textContent='✓ Currículo completo!';
+}
+
+// ===== AUTOSAVE =====
+let saveTimer;
+function scheduleSave(){
+  clearTimeout(saveTimer);
+  document.getElementById('saveBadge').textContent='○ salvando...';
+  document.getElementById('saveBadge').className='save-badge';
+  saveTimer=setTimeout(()=>{
+    try{
+      const data={
+        nome:gf('nomeCompleto'),titulo:gf('tituloprofissional'),email:gf('email'),
+        telefone:gf('telefone'),localidade:gf('localidade'),linkedin:gf('linkedin'),
+        website:gf('website'),perfil:gf('perfil'),
+        experiencias:state.experiencias,formacoes:state.formacoes,
+        skills:state.skills,idiomas:state.idiomas,certifications:state.certifications,
+        template:state.template,color:state.color,photo:state.photo
+      };
+      localStorage.setItem('curriculopro',JSON.stringify(data));
+      const badge=document.getElementById('saveBadge');
+      badge.textContent='✓ salvo';badge.className='save-badge saved';
+    }catch(e){}
+  },1200);
+}
+
+function loadSaved(){
+  try{
+    const raw=localStorage.getItem('curriculopro');
+    if(!raw)return;
+    const data=JSON.parse(raw);
+    ['nomeCompleto','tituloprofissional','email','telefone','localidade','linkedin','website','perfil'].forEach(id=>{
+      const el=document.getElementById(id);if(el&&data[id])el.value=data[id];
+    });
+    if(data.photo){
+      state.photo=data.photo;
+      document.getElementById('photoPreview').src=state.photo;
+      document.getElementById('photoPreview').style.display='block';
+      document.getElementById('photoPlaceholder').style.display='none';
+    }
+    if(data.experiencias){state.experiencias=data.experiencias;expCount=data.experiencias.length;renderExpList();}
+    if(data.formacoes){state.formacoes=data.formacoes;eduCount=data.formacoes.length;renderEduList();}
+    if(data.skills){state.skills=data.skills;renderSkillList();}
+    if(data.idiomas){state.idiomas=data.idiomas;langCount=data.idiomas.length;renderLangList();}
+    if(data.certifications){state.certifications=data.certifications;certCount=data.certifications.length;renderCertList();}
+    if(data.template){
+      state.template=data.template;
+      const card=document.querySelector('.tc-'+data.template);
+      if(card){document.querySelectorAll('.template-card').forEach(c=>c.classList.remove('selected'));card.classList.add('selected');}
+    }
+    if(data.color){
+      state.color=data.color;
+      document.querySelectorAll('.color-opt').forEach(c=>{if(c.getAttribute('onclick')&&c.getAttribute('onclick').includes("'"+data.color+"'"))c.classList.add('selected');else c.classList.remove('selected');});
+    }
+    if(data.nome||data.skills.length)showToast('✓ Progresso restaurado!','ok');
+  }catch(e){}
+}
+
+// ===== RENDER PREVIEW =====
+function gf(id){const el=document.getElementById(id);return el?el.value.trim():''}
+function h(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function updatePreview(){
+  updateProgress();
+  scheduleSave();
+  const nome=gf('nomeCompleto'),titulo=gf('tituloprofissional'),email=gf('email'),
+    telefone=gf('telefone'),localidade=gf('localidade'),linkedin=gf('linkedin'),
+    website=gf('website'),perfil=gf('perfil');
+
+  const rw=document.getElementById('rw');
+  rw.className=`resume-page tpl-${state.template} color-${state.color}`;
+  const fs=state.fontSize==='large'?1.08:state.fontSize==='normal'?1:0.93;
+  rw.style.fontSize=fs+'em';
+
+  const photoEl=state.photo?`<img src="${state.photo}" style="width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.3);flex-shrink:0">`:'';
+  const photoRect=state.photo?`<img src="${state.photo}" style="width:80px;height:80px;border-radius:10px;object-fit:cover;flex-shrink:0">`:'';
+
+  const contacts=[
+    email&&`<div class="rc">✉ ${h(email)}</div>`,
+    telefone&&`<div class="rc">📞 ${h(telefone)}</div>`,
+    localidade&&`<div class="rc">📍 ${h(localidade)}</div>`,
+    linkedin&&`<div class="rc">🔗 ${h(linkedin)}</div>`,
+    website&&`<div class="rc">🌐 ${h(website)}</div>`,
+  ].filter(Boolean).join('');
+
+  const expHTML=state.experiencias.filter(e=>e.cargo||e.empresa).map(e=>`
+    <div class="ei"><div class="et">${h(e.cargo)||'—'}</div><div class="ec">${h(e.empresa)}</div>${e.periodo?`<div class="ep">${h(e.periodo)}</div>`:''} ${e.desc?`<div class="ed">${h(e.desc)}</div>`:''}</div>`).join('');
+
+  const eduHTML=state.formacoes.filter(e=>e.curso||e.instituicao).map(e=>`
+    <div class="ei"><div class="et">${h(e.curso)||'—'}</div><div class="ec">${h(e.instituicao)}</div>${e.ano?`<div class="ep">${h(e.ano)}</div>`:''}</div>`).join('');
+
+  const langHTML=state.idiomas.filter(l=>l.idioma).map(l=>`
+    <div class="ei" style="margin-bottom:9px"><div class="et" style="font-size:12px">${h(l.idioma)}</div><div class="ep">${h(l.nivel)}</div></div>`).join('');
+
+  const certHTML=state.certifications.filter(c=>c.nome).map(c=>`
+    <div class="ei" style="margin-bottom:9px"><div class="et" style="font-size:12px">${h(c.nome)}</div>${c.emissor?`<div class="ec">${h(c.emissor)}</div>`:''} ${c.ano?`<div class="ep">${h(c.ano)}</div>`:''}</div>`).join('');
+
+  const T=state.template;
+  const nmHTML=nome?`<div class="rn">${h(nome)}</div>`:`<div class="rn" style="opacity:.25">Seu Nome</div>`;
+
+  if(T==='elegance'){
+    rw.innerHTML=`
+      <div class="rh">${nmHTML}<div class="rt">${h(titulo)}</div><div class="rcs">${contacts||'<span style="opacity:.3;font-size:12px">Adicione contatos</span>'}</div>${photoEl?'<div>'+photoEl+'</div>':''}</div>
+      <div class="rb">
+        <div class="rsb">
+          ${perfil?`<div class="rs"><div class="st">Perfil</div><div class="pt">${h(perfil)}</div></div>`:''}
+          ${state.skills.length?`<div class="rs"><div class="st">Habilidades</div><div class="tl">${state.skills.map(s=>`<span class="tg">${h(s)}</span>`).join('')}</div></div>`:''}
+          ${langHTML?`<div class="rs"><div class="st">Idiomas</div>${langHTML}</div>`:''}
+          ${certHTML?`<div class="rs"><div class="st">Certificações</div>${certHTML}</div>`:''}
+        </div>
+        <div class="rm">
+          ${expHTML?`<div class="rs"><div class="st">Experiência Profissional</div>${expHTML}</div>`:''}
+          ${eduHTML?`<div class="rs"><div class="st">Formação Acadêmica</div>${eduHTML}</div>`:''}
+        </div>
+      </div>`;
+
+  }else if(T==='moderno'){
+    rw.innerHTML=`
+      <div class="rh"><div class="hc">${photoRect}
+        <div>${nmHTML}<div class="rt">${h(titulo)}</div><div class="cg">${contacts}</div></div>
+      </div></div>
+      <div class="rb"><div class="bg">
+        <div>
+          ${perfil?`<div class="rs"><div class="st">Perfil</div><div class="pt">${h(perfil)}</div></div>`:''}
+          ${expHTML?`<div class="rs"><div class="st">Experiência</div>${expHTML}</div>`:''}
+          ${eduHTML?`<div class="rs"><div class="st">Formação</div>${eduHTML}</div>`:''}
+        </div>
+        <div>
+          ${state.skills.length?`<div class="rs"><div class="st">Habilidades</div>${state.skills.map(s=>`<span class="sp">${h(s)}</span>`).join('')}</div>`:''}
+          ${langHTML?`<div class="rs"><div class="st">Idiomas</div>${langHTML}</div>`:''}
+          ${certHTML?`<div class="rs"><div class="st">Certificações</div>${certHTML}</div>`:''}
+        </div>
+      </div></div>`;
+
+  }else if(T==='minimalista'){
+    const cRight=[email,telefone,localidade].filter(Boolean).map(c=>`<div class="rc">${h(c)}</div>`).join('');
+    rw.innerHTML=`
+      <div class="rh"><div class="ht"><div>${nmHTML}<div class="rt">${h(titulo)}</div></div><div class="cr">${cRight}</div></div></div>
+      <div class="rb">
+        ${perfil?`<div class="rs"><div class="st">Perfil</div><div><div class="pt">${h(perfil)}</div></div></div>`:''}
+        ${expHTML?`<div class="rs"><div class="st">Experiência</div><div>${expHTML}</div></div>`:''}
+        ${eduHTML?`<div class="rs"><div class="st">Formação</div><div>${eduHTML}</div></div>`:''}
+        ${state.skills.length?`<div class="rs"><div class="st">Habilidades</div><div><div class="si">${state.skills.map(s=>`<span class="sc">${h(s)}</span>`).join('')}</div></div></div>`:''}
+        ${langHTML?`<div class="rs"><div class="st">Idiomas</div><div>${langHTML}</div></div>`:''}
+      </div>`;
+
+  }else if(T==='criativo'){
+    const levels=['Básico','Pré-intermediário','Intermediário','Avançado','Fluente','Nativo'];
+    const dotLangs=state.idiomas.filter(l=>l.idioma).map(l=>{
+      const dots=Math.max(1,levels.indexOf(l.nivel)+1);
+      return`<div class="sdr"><div class="sdn">${h(l.idioma)}</div><div class="sdd">${[1,2,3,4,5,6].slice(0,6).map(i=>`<div class="dot${i<=dots?' on':''}"></div>`).join('')}</div></div>`;
+    }).join('');
+    rw.innerHTML=`
+      <div class="rsb">
+        <div class="pw">
+          ${state.photo?`<img src="${state.photo}" style="width:88px;height:88px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 14px;border:3px solid rgba(255,255,255,.25)">`:''}
+          ${nmHTML}<div class="rt">${h(titulo)}</div>
+        </div>
+        ${contacts?`<div class="ss"><div class="st">Contato</div>${contacts}</div>`:''}
+        ${state.skills.length?`<div class="ss"><div class="st">Habilidades</div>${state.skills.map(s=>`<div style="font-size:12px;margin-bottom:5px;opacity:.9">${h(s)}</div>`).join('')}</div>`:''}
+        ${dotLangs?`<div class="ss"><div class="st">Idiomas</div>${dotLangs}</div>`:''}
+      </div>
+      <div class="rm">
+        ${perfil?`<div class="ms"><div class="mst">Perfil</div><div class="pt">${h(perfil)}</div></div>`:''}
+        ${expHTML?`<div class="ms"><div class="mst">Experiência Profissional</div>${expHTML}</div>`:''}
+        ${eduHTML?`<div class="ms"><div class="mst">Formação Acadêmica</div>${eduHTML}</div>`:''}
+        ${certHTML?`<div class="ms"><div class="mst">Certificações</div>${certHTML}</div>`:''}
+      </div>`;
+
+  }else if(T==='executivo'){
+    rw.innerHTML=`
+      <div class="rh">${nmHTML}<div class="rt">${h(titulo)}</div><div class="cl">${contacts}</div></div>
+      <div class="rb">
+        ${perfil?`<div class="rs"><div class="sd"><span class="st">Perfil</span></div><div class="pt">${h(perfil)}</div></div>`:''}
+        ${expHTML?`<div class="rs"><div class="sd"><span class="st">Experiência Profissional</span></div>${state.experiencias.filter(e=>e.cargo||e.empresa).map(e=>`
+          <div class="ei"><div class="ep">${h(e.periodo)}</div><div><div class="et">${h(e.cargo)}</div><div class="ec">${h(e.empresa)}</div>${e.desc?`<div class="ed">${h(e.desc)}</div>`:''}</div></div>`).join('')}</div>`:''}
+        ${eduHTML?`<div class="rs"><div class="sd"><span class="st">Formação Acadêmica</span></div>${eduHTML}</div>`:''}
+        ${state.skills.length?`<div class="rs"><div class="sd"><span class="st">Competências</span></div><div class="skc">${state.skills.map(s=>`<div class="ski">${h(s)}</div>`).join('')}</div></div>`:''}
+        ${langHTML?`<div class="rs"><div class="sd"><span class="st">Idiomas</span></div><div class="skc">${state.idiomas.filter(l=>l.idioma).map(l=>`<div class="ski">${h(l.idioma)} — ${h(l.nivel)}</div>`).join('')}</div></div>`:''}
+      </div>`;
+
+  }else if(T==='verde'){
+    rw.innerHTML=`
+      <div class="rh">
+        ${state.photo?`<img src="${state.photo}" style="width:88px;height:88px;border-radius:14px;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,.3)">`:''}
+        <div class="hi">${nmHTML}<div class="rt">${h(titulo)}</div><div class="cg">${contacts}</div></div>
+      </div>
+      <div class="rb">
+        <div class="rm">
+          ${perfil?`<div class="rs"><div class="st">Perfil Profissional</div><div class="pt">${h(perfil)}</div></div>`:''}
+          ${expHTML?`<div class="rs"><div class="st">Experiência</div>${expHTML}</div>`:''}
+          ${eduHTML?`<div class="rs"><div class="st">Formação</div>${eduHTML}</div>`:''}
+        </div>
+        <div class="rsb">
+          ${state.skills.length?`<div class="rs"><div class="st">Habilidades</div>${state.skills.map(s=>`<span class="vtg">${h(s)}</span>`).join('')}</div>`:''}
+          ${langHTML?`<div class="rs"><div class="st">Idiomas</div>${langHTML}</div>`:''}
+          ${certHTML?`<div class="rs"><div class="st">Certificações</div>${certHTML}</div>`:''}
+        </div>
+      </div>`;
+
+  }else if(T==='tech'){
+    rw.innerHTML=`
+      <div class="rh">
+        ${state.photo?`<img src="${state.photo}" style="width:85px;height:85px;border-radius:10px;object-fit:cover;flex-shrink:0;border:2px solid rgba(79,195,247,.4)">`:''}
+        <div class="hi">${nmHTML}<div class="rt">${h(titulo)}</div><div class="cg">${contacts}</div></div>
+      </div>
+      <div class="rb">
+        <div class="rm">
+          ${perfil?`<div class="rs"><div class="stm">Sobre Mim</div><div class="pt">${h(perfil)}</div></div>`:''}
+          ${expHTML?`<div class="rs"><div class="stm">Experiência</div>${expHTML}</div>`:''}
+          ${eduHTML?`<div class="rs"><div class="stm">Formação</div>${eduHTML}</div>`:''}
+        </div>
+        <div class="rsb">
+          ${state.skills.length?`<div class="rs"><div class="st">Stack / Skills</div>${state.skills.map(s=>`<span class="ctg">${h(s)}</span>`).join('')}</div>`:''}
+          ${langHTML?`<div class="rs"><div class="st">Idiomas</div>${langHTML}</div>`:''}
+          ${certHTML?`<div class="rs"><div class="st">Certificações</div>${certHTML}</div>`:''}
+        </div>
+      </div>`;
+
+  }else if(T==='academico'){
+    rw.innerHTML=`
+      <div class="rh">${nmHTML}<div class="rt">${h(titulo)}</div><div class="cl">${contacts}</div></div>
+      <div class="rb">
+        ${perfil?`<div class="rs"><div class="st">Resumo Acadêmico</div><div class="pt">${h(perfil)}</div></div>`:''}
+        ${eduHTML?`<div class="rs"><div class="st">Formação Acadêmica</div>${eduHTML}</div>`:''}
+        ${expHTML?`<div class="rs"><div class="st">Experiência Profissional</div>${expHTML}</div>`:''}
+        ${state.skills.length?`<div class="rs"><div class="st">Áreas de Atuação</div><div class="skc">${state.skills.map(s=>`<div class="ski">▪ ${h(s)}</div>`).join('')}</div></div>`:''}
+        ${langHTML?`<div class="rs"><div class="st">Idiomas</div><div class="skc">${state.idiomas.filter(l=>l.idioma).map(l=>`<div class="ski">${h(l.idioma)} — ${h(l.nivel)}</div>`).join('')}</div></div>`:''}
+        ${certHTML?`<div class="rs"><div class="st">Publicações e Certificações</div>${certHTML}</div>`:''}
+      </div>`;
+  }
+}
+
+// ===== PDF & PRINT =====
+function downloadPDF(){
+  const el=document.getElementById('rw');
+  const nome=gf('nomeCompleto')||'curriculo';
+  const btn=document.getElementById('pdfBtn');
+  btn.textContent='⏳ Gerando...'; btn.disabled=true;
+  const opt={margin:0,filename:nome.replace(/\s+/g,'_')+'.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,logging:false},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}};
+  html2pdf().set(opt).from(el).save()
+    .then(()=>{btn.textContent='⬇ Baixar PDF';btn.disabled=false;showToast('✓ PDF baixado com sucesso!','ok');})
+    .catch(()=>{btn.textContent='⬇ Baixar PDF';btn.disabled=false;showToast('Erro ao gerar PDF. Tente imprimir.');});
+}
+
+function openPrintModal(){ document.getElementById('printModal').classList.add('open'); }
+
+// ===== CLEAR =====
+function confirmClear(){ document.getElementById('clearModal').classList.add('open'); }
+function clearAll(){
+  localStorage.removeItem('curriculopro');
+  document.getElementById('clearModal').classList.remove('open');
+  location.reload();
+}
+
+// ===== TOAST =====
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast'+(type?' '+type:'');
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ===== INPUT LISTENERS =====
+['nomeCompleto','tituloprofissional','email','telefone','localidade','linkedin','website','perfil'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)el.addEventListener('input',()=>updatePreview());
+});
+
+// ===== INIT =====
+renderSuggestions();
+loadSaved();
+if(!state.experiencias.length){addExp();}
+if(!state.formacoes.length){addEdu();}
+if(!state.skills.length){
+  addSkillDirect('Microsoft Office');
+  addSkillDirect('Comunicação');
+  addSkillDirect('Trabalho em Equipe');
+}
+if(!state.idiomas.length){addLang();}
+updatePreview();
+</script>
+</body>
+</html>
